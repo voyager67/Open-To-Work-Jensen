@@ -111,8 +111,8 @@ class FeedTests(unittest.TestCase):
     def test_feed_and_article_urls_reject_credentials_and_control_chars(self):
         from otwj.feeds import _valid_http_url
 
-        self.assertFalse(_valid_http_url("https://user:pass@example.com/feed"))
-        self.assertFalse(_valid_http_url("https://:pass@example.com/feed"))
+        self.assertFalse(_valid_http_url("https://user:pass@localhost/feed"))
+        self.assertFalse(_valid_http_url("https://:pass@localhost/feed"))
         self.assertFalse(_valid_http_url("https://example.com\n/feed"))
         self.assertTrue(_valid_http_url("https://example.com/feed"))
 
