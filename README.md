@@ -119,14 +119,6 @@ Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
 | [Yahoo Finance via yfinance](https://github.com/ranaroussi/yfinance) | Adjusted daily closes for NVDA and SPY; unofficial and potentially delayed. |
 | [Dated context records](data/context_events.json) | Reviewed event dates and direct source links. |
 
-## Methodology and limitations
-
-- Publisher labels identify the destination host; they do not verify every claim in an article.
-- Headlines are discovery metadata. Company statements and regulatory filings are distinguished from media and aggregator coverage.
-- The dashboard does not score rumours, rank potential successors, infer private intentions, or claim that a nearby headline caused a stock move.
-- Market comparisons are descriptive. Event-date alignment is not a causal model, formal event study, or investment signal.
-- CUDA Future Lab uses deterministic templates for hypothetical product ideation. Its output is not an NVIDIA roadmap or prediction.
-- Feed collection is bounded by request timeouts, response-size limits, request spacing, and caching. Article bodies are not scraped or republished.
 
 ## Contributing
 
