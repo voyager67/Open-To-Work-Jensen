@@ -143,7 +143,7 @@ The CLI and browser demo use deterministic templates. The Streamlit dashboard ad
     ├── CITATION.cff
     ├── LICENSE
     ├── pyproject.toml
-    ├── requirements*.txt
+    ├── requirements.txt
     └── SECURITY.md
 
 ## Tests
@@ -151,7 +151,7 @@ The CLI and browser demo use deterministic templates. The Streamlit dashboard ad
     python -m compileall -q app.py otwj tests
     python -m unittest discover -s tests -v
 
-The suite covers the deterministic generators, explicit dry-run safety, RSS/Atom parsing, feed limits and failure isolation, publisher labels, and event-date return alignment. GitHub Actions tests Python 3.10, 3.11, and 3.12.
+The suite covers deterministic generators, explicit dry-run safety, RSS/Atom parsing, URL validation, feed limits, DTD/entity rejection, failure isolation, safe rendering of untrusted headlines, publisher labels, and event-date return alignment. GitHub Actions tests Python 3.10, 3.11, and 3.12.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Original code is MIT licensed. NVIDIA names and marks, third-party feeds, market data, headlines, and linked articles remain subject to their owners' rights and terms.
 

@@ -166,7 +166,8 @@ with tabs[0]:
         articles, errors = cached_news()
     if errors:
         for error in errors:
-            st.warning(error)
+            # Provider error strings may contain untrusted response text.
+            st.text(error)
     if articles:
         topic_filter = st.multiselect(
             "Filter coverage", ["Leadership", "CUDA / product", "Markets", "General"],
@@ -186,8 +187,9 @@ with tabs[0]:
                 continue
             published = article.published.strftime("%Y-%m-%d %H:%M UTC") if article.published else "Date not supplied"
             with st.container(border=True):
-                st.markdown(f"**{article.title}**")
-                st.caption(f"{article.publisher} · {source_label} · {published} · {' / '.join(tags)}")
+                # Public feed text is untrusted: render as plain text, never Markdown/HTML.
+                st.text(article.title)
+                st.text(f"{article.publisher} · {source_label} · {published} · {' / '.join(tags)}")
                 if article.summary:
                     st.text(article.summary)
                 st.link_button("Open publisher source", article.url)
@@ -249,8 +251,9 @@ with tabs[1]:
         st.subheader("Recent daily returns")
         st.dataframe(returns, hide_index=True, use_container_width=True)
     except Exception as exc:
-        st.warning(f"Market data is unavailable: {exc}")
-        st.markdown("Use [NVIDIA's investor stock page](https://investor.nvidia.com/stock-info/stock-quote-and-chart/default.aspx) as a primary reference. The dashboard will not substitute made-up prices.")
+        st.warning("Market data is unavailable. No substitute prices will be shown.")
+        st.text(str(exc))
+        st.markdown("Use [NVIDIA's investor stock page](https://investor.nvidia.com/stock-info/stock-quote-and-chart/default.aspx) as a primary reference.")
     st.caption("Research and education only. Not investment advice, a trading signal, or a causal event study.")
 
 with tabs[2]:

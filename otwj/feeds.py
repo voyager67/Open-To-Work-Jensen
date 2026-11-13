@@ -119,8 +119,22 @@ def _parse_date(value: str) -> datetime | None:
 
 
 def _valid_http_url(value: str) -> bool:
-    parsed = urlparse(value.strip())
-    return parsed.scheme in {"http", "https"} and bool(parsed.hostname) and not parsed.username
+    """Accept only well-formed HTTP(S) URLs without embedded credentials."""
+    if not isinstance(value, str) or not value or any(ord(char) < 32 or ord(char) == 127 for char in value):
+        return False
+    try:
+        parsed = urlparse(value.strip())
+        hostname = parsed.hostname
+        # Accessing .port validates malformed port syntax as well.
+        _ = parsed.port
+    except ValueError:
+        return False
+    return (
+        parsed.scheme in {"http", "https"}
+        and bool(hostname)
+        and parsed.username is None
+        and parsed.password is None
+    )
 
 
 def _parse_rss(root: ET.Element, feed: dict[str, str]) -> list[Article]:
@@ -188,6 +202,12 @@ def fetch_feed(feed: dict[str, str], timeout: int = REQUEST_TIMEOUT_SECONDS, lim
         body = response.read(MAX_FEED_BYTES + 1)
     if len(body) > MAX_FEED_BYTES:
         raise ValueError(f"Feed exceeded the {MAX_FEED_BYTES:,}-byte safety limit.")
+
+    # Feeds are untrusted input. Reject DTD/entity declarations to prevent
+    # entity-expansion payloads before parsing the XML document.
+    upper_body = body.upper()
+    if b"<!DOCTYPE" in upper_body or b"<!ENTITY" in upper_body:
+        raise ValueError("Feed contains a prohibited DTD or entity declaration.")
 
     root = ET.fromstring(body)
     articles = _parse_rss(root, feed)

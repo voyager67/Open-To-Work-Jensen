@@ -94,6 +94,20 @@ class FeedTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 fetch_feed({"name": "large", "url": "https://example.com/feed", "kind": "official"})
 
+    def test_feed_dtd_and_entity_declarations_are_rejected(self):
+        xml = b"<!DOCTYPE rss [<!ENTITY x 'expanded'>]><rss><channel /></rss>"
+        with patch("urllib.request.urlopen", return_value=io.BytesIO(xml)):
+            with self.assertRaisesRegex(ValueError, "DTD or entity"):
+                fetch_feed({"name": "hostile", "url": "https://example.com/feed", "kind": "external"})
+
+    def test_feed_and_article_urls_reject_credentials_and_control_chars(self):
+        from otwj.feeds import _valid_http_url
+
+        self.assertFalse(_valid_http_url("https://user:pass@example.com/feed"))
+        self.assertFalse(_valid_http_url("https://:pass@example.com/feed"))
+        self.assertFalse(_valid_http_url("https://example.com\\n/feed"))
+        self.assertTrue(_valid_http_url("https://example.com/feed"))
+
     def test_feed_failures_are_isolated_and_duplicates_removed(self):
         one = {"name": "one", "url": "https://one.example/feed", "kind": "official"}
         two = {"name": "two", "url": "https://two.example/feed", "kind": "aggregated"}
@@ -168,6 +182,12 @@ class StaticDemoTests(unittest.TestCase):
         self.assertEqual(parser.external_scripts, [], "Static demo must not require third-party JavaScript")
         self.assertIn("Do not spam", html)
         self.assertIn("NVIDIA announces CEO transition", html)
+
+    def test_streamlit_renders_external_headlines_as_plain_text(self):
+        app = (Path(__file__).resolve().parents[1] / "app.py").read_text(encoding="utf-8")
+        self.assertIn("st.text(article.title)", app)
+        self.assertIn('st.text(f"{article.publisher}', app)
+        self.assertNotIn('st.markdown(f"**{article.title}**")', app)
 
 
 if __name__ == "__main__":

@@ -37,15 +37,3 @@ otwj = "otwj.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["otwj*"]
-
-[tool.ruff]
-line-length = 110
-target-version = "py310"
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B"]
-ignore = ["E501"]
-
-[tool.pytest.ini_options]
-pythonpath = ["."]
-testpaths = ["tests"]
