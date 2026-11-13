@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software in research or teaching, please cite the repository."
+title: "Open-To-Work-Jensen: A Source-Aware NVIDIA Leadership Research Console"
+version: 1.0.0
+date-released: 2026-11-13
+url: https://github.com/voyager67/Open-To-Work-Jensen
+license: MIT
+type: software
+abstract: >-
+  An educational, source-aware dashboard for tracking public NVIDIA leadership
+  statements, comparing NVDA and SPY market context, generating hypothetical
+  CUDA roadmap scenarios, and producing clearly fictional affectionate satire.
