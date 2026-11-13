@@ -13,7 +13,7 @@ Thanks for helping improve Open-To-Work-Jensen. Keep changes reproducible, sourc
 ## Before opening a pull request
 
 ```bash
-python -m pip install -r requirements-dev.txt
+python -m pip install -r requirements.txt
 python -m compileall -q app.py otwj tests
 python -m unittest discover -s tests -v
 ```

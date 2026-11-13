@@ -100,6 +100,14 @@ class FeedTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "DTD or entity"):
                 fetch_feed({"name": "hostile", "url": "https://example.com/feed", "kind": "external"})
 
+    def test_utf16_feed_dtd_and_entity_declarations_are_rejected(self):
+        document = "<?xml version='1.0' encoding='UTF-16'?><!DOCTYPE rss [<!ENTITY x 'expanded'>]><rss><channel /></rss>"
+        for encoding, bom in (("utf-16-le", b"\xff\xfe"), ("utf-16-be", b"\xfe\xff")):
+            xml = bom + document.encode(encoding)
+            with patch("urllib.request.urlopen", return_value=io.BytesIO(xml)):
+                with self.assertRaisesRegex(ValueError, "DTD or entity"):
+                    fetch_feed({"name": "utf16-hostile", "url": "https://example.com/feed", "kind": "external"})
+
     def test_feed_and_article_urls_reject_credentials_and_control_chars(self):
         from otwj.feeds import _valid_http_url
 
@@ -188,6 +196,29 @@ class StaticDemoTests(unittest.TestCase):
         self.assertIn("st.text(article.title)", app)
         self.assertIn('st.text(f"{article.publisher}', app)
         self.assertNotIn('st.markdown(f"**{article.title}**")', app)
+
+    def test_dependency_floors_include_known_security_fixes(self):
+        pyproject = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(encoding="utf-8")
+        self.assertIn('"streamlit>=1.54.0,<2"', pyproject)
+        self.assertIn('"plotly>=7.1,<8"', pyproject)
+        self.assertIn('"yfinance>=1.8.0,<2"', pyproject)
+        self.assertIn('setuptools>=84.1.0', pyproject)
+
+    def test_streamlit_cache_cannot_be_manually_bypassed(self):
+        app = (Path(__file__).resolve().parents[1] / "app.py").read_text(encoding="utf-8")
+        self.assertNotIn("cached_news.clear", app)
+        self.assertNotIn("cached_market.clear", app)
+        self.assertNotIn("Refresh public sources", app)
+        self.assertIn("every 15 minutes", app)
+        self.assertIn("every hour", app)
+
+    def test_contributor_instructions_use_the_real_requirements_file(self):
+        root = Path(__file__).resolve().parents[1]
+        contributing = (root / "CONTRIBUTING.md").read_text(encoding="utf-8")
+        self.assertIn("requirements.txt", contributing)
+        self.assertNotIn("requirements-dev.txt", contributing)
+        self.assertTrue((root / "requirements.txt").is_file())
+        self.assertFalse((root / "requirements-dev.txt").exists())
 
     def test_streamlit_usage_telemetry_is_disabled(self):
         config = (Path(__file__).resolve().parents[1] / ".streamlit" / "config.toml").read_text(encoding="utf-8")

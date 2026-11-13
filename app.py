@@ -98,11 +98,7 @@ st.caption(
 with st.sidebar:
     st.subheader("Research controls")
     period = st.selectbox("Market window", ["1mo", "3mo", "6mo", "1y"], index=2)
-    st.caption("Source cache: 15 minutes · Market cache: 1 hour")
-    if st.button("Refresh public sources", use_container_width=True):
-        cached_news.clear()
-        cached_market.clear()
-        st.rerun()
+    st.caption("Automatic refresh: public feeds every 15 minutes · market data every hour")
     st.divider()
     st.markdown("**Evidence policy**")
     st.caption(

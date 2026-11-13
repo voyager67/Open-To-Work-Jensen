@@ -15,5 +15,6 @@ Please do not open a public issue containing credentials, personal data, or an e
 - The CLI requires an explicit `--dry-run` flag.
 - The CLI performs no network or external actions.
 - Feed responses are time- and size-bounded.
+- Streamlit cache TTLs enforce a 15-minute feed refresh and one-hour market refresh; the UI does not provide a cache-bypass button.
 - Feed links are restricted to HTTP(S) URLs before display.
 - The app does not scrape full article pages or submit posts/messages.

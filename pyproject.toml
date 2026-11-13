@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=84.1.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -27,9 +27,9 @@ dependencies = ["pandas>=2.2,<4"]
 
 [project.optional-dependencies]
 dashboard = [
-  "streamlit>=1.39,<2",
-  "plotly>=5.24,<7",
-  "yfinance>=0.2.66,<2",
+  "streamlit>=1.54.0,<2",
+  "plotly>=7.1,<8",
+  "yfinance>=1.8.0,<2",
 ]
 
 [project.scripts]

@@ -205,8 +205,11 @@ def fetch_feed(feed: dict[str, str], timeout: int = REQUEST_TIMEOUT_SECONDS, lim
 
     # Feeds are untrusted input. Reject DTD/entity declarations to prevent
     # entity-expansion payloads before parsing the XML document.
-    upper_body = body.upper()
-    if b"<!DOCTYPE" in upper_body or b"<!ENTITY" in upper_body:
+    # XML permits UTF-8 and UTF-16 encodings. Removing NUL bytes before this
+    # token scan also catches UTF-16 markup instead of letting an encoding
+    # variant bypass the DTD/entity safeguard.
+    normalized_xml = body.upper().replace(b"\x00", b"")
+    if b"<!DOCTYPE" in normalized_xml or b"<!ENTITY" in normalized_xml:
         raise ValueError("Feed contains a prohibited DTD or entity declaration.")
 
     root = ET.fromstring(body)

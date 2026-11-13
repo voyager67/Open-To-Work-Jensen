@@ -110,7 +110,7 @@ Open the docs/index.html file directly, or enable GitHub Pages with **GitHub Act
 | Market context | Yahoo Finance via [yfinance](https://github.com/ranaroussi/yfinance) | Adjusted daily closes for NVDA and SPY; unofficial and potentially delayed. |
 | Dated context anchors | data/context_events.json | Manually reviewed dated company statements with primary links. |
 
-**Collection guardrails:** Streamlit usage-statistics telemetry is disabled in the project config. Each feed request has a seven-second timeout and 1 MB response cap; requests are spaced at least 1.25 seconds apart; feed results are cached for 15 minutes and market data for one hour in Streamlit. Only headline metadata, publisher, timestamps, short summaries, and source links are shown. Article pages are not scraped or republished. Feed failures are isolated.
+**Collection guardrails:** Streamlit usage-statistics telemetry is disabled in the project config. Each feed request has a seven-second timeout and 1 MB response cap; requests are spaced at least 1.25 seconds apart; feed results are cached for 15 minutes and market data for one hour in Streamlit; the UI has no manual cache-bypass control. Only headline metadata, publisher, timestamps, short summaries, and source links are shown. Article pages are not scraped or republished. Feed failures are isolated.
 
 Respect each source's terms. NVIDIA's [RSS directory](https://www.nvidia.com/en-us/about-nvidia/rss/) describes informational use and restricts commercial reuse; review the terms before reusing feeds elsewhere.
 
@@ -152,7 +152,7 @@ The CLI and browser demo use deterministic templates. The Streamlit dashboard ad
     python -m compileall -q app.py otwj tests
     python -m unittest discover -s tests -v
 
-The suite covers deterministic generators, explicit dry-run safety, RSS/Atom parsing, URL validation, feed limits, DTD/entity rejection, failure isolation, safe rendering of untrusted headlines, publisher labels, and event-date return alignment. GitHub Actions tests Python 3.10, 3.11, and 3.12.
+The suite covers deterministic generators, explicit dry-run safety, RSS/Atom parsing (including UTF-16 hostile XML), URL validation, feed limits, DTD/entity rejection, failure isolation, safe rendering of untrusted headlines, cache policy, dependency security floors, publisher labels, contributor instructions, and event-date return alignment. GitHub Actions tests Python 3.10 through 3.13 and runs pip-audit against the installed dependency set.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Original code is MIT licensed. NVIDIA names and marks, third-party feeds, market data, headlines, and linked articles remain subject to their owners' rights and terms.
 
