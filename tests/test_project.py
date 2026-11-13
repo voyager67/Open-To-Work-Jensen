@@ -105,7 +105,7 @@ class FeedTests(unittest.TestCase):
 
         self.assertFalse(_valid_http_url("https://user:pass@example.com/feed"))
         self.assertFalse(_valid_http_url("https://:pass@example.com/feed"))
-        self.assertFalse(_valid_http_url("https://example.com\\n/feed"))
+        self.assertFalse(_valid_http_url("https://example.com\n/feed"))
         self.assertTrue(_valid_http_url("https://example.com/feed"))
 
     def test_feed_failures_are_isolated_and_duplicates_removed(self):
