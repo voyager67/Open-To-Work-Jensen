@@ -7,7 +7,7 @@ name = "open-to-work-jensen"
 version = "1.0.0"
 description = "A source-aware NVIDIA leadership research console with NVDA market context, hypothetical CUDA roadmaps, and affectionate satire."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 keywords = ["nvidia", "cuda", "research-dashboard", "rss", "streamlit", "market-context", "satire"]
 classifiers = [
@@ -17,7 +17,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",

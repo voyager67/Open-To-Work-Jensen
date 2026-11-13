@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve Open-To-Work-Jensen. Keep changes reproducible, source-aware, and respectful.
+Thanks for helping improve Open-To-Work-Jensen. Use Python 3.11 or newer, and keep changes reproducible, source-aware, and respectful.
 
 ## Good first contributions
 

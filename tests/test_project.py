@@ -206,6 +206,20 @@ class StaticDemoTests(unittest.TestCase):
         self.assertIn('"yfinance>=1.8.0,<2"', pyproject)
         self.assertIn('setuptools>=84.1.0', pyproject)
 
+    def test_python_support_matches_dashboard_runtime(self):
+        pyproject = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(encoding="utf-8")
+        self.assertIn('requires-python = ">=3.11"', pyproject)
+        self.assertNotIn('"Programming Language :: Python :: 3.10"', pyproject)
+
+    def test_ci_uses_isolated_project_and_audit_environments(self):
+        workflow = (Path(__file__).resolve().parents[1] / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+        self.assertIn('python-version: ["3.11", "3.12", "3.13"]', workflow)
+        self.assertIn("python -m venv .venv", workflow)
+        self.assertIn("python -m venv .audit-tool", workflow)
+        self.assertIn("pip-audit --path", workflow)
+        self.assertIn("--skip-editable", workflow)
+        self.assertNotIn("\n          pip-audit\n", workflow)
+
     def test_streamlit_cache_cannot_be_manually_bypassed(self):
         app = (Path(__file__).resolve().parents[1] / "app.py").read_text(encoding="utf-8")
         self.assertNotIn("cached_news.clear", app)

@@ -27,3 +27,4 @@ credentials.json
 secrets/
 .secrets/
 *.zip
+.audit-tool/

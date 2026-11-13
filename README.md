@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://github.com/voyager67/Open-To-Work-Jensen/actions/workflows/ci.yml"><img src="https://github.com/voyager67/Open-To-Work-Jensen/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-76b900.svg" alt="MIT" /></a>
-  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB.svg" alt="Python 3.10+" />
+  <img src="https://img.shields.io/badge/Python-3.11%2B-3776AB.svg" alt="Python 3.11+" />
   <img src="https://img.shields.io/badge/GPU-not%20required-76b900.svg" alt="GPU not required" />
   <img src="https://img.shields.io/badge/API%20key-not%20required-76b900.svg" alt="API key not required" />
 </p>
@@ -46,7 +46,7 @@ The browser demo is self-contained. The Python dashboard adds the public-feed re
 
 ### 1. Generate a local preview in seconds
 
-Python 3.10+ only. No GPU, CUDA runtime, API key, account, network, or package install is required for this command.
+Python 3.11+ only. No GPU, CUDA runtime, API key, account, network, or package install is required for this command.
 
     python -m otwj --dry-run
 
@@ -152,7 +152,7 @@ The CLI and browser demo use deterministic templates. The Streamlit dashboard ad
     python -m compileall -q app.py otwj tests
     python -m unittest discover -s tests -v
 
-The suite covers deterministic generators, explicit dry-run safety, RSS/Atom parsing (including UTF-16 hostile XML), URL validation, feed limits, DTD/entity rejection, failure isolation, safe rendering of untrusted headlines, cache policy, dependency security floors, publisher labels, contributor instructions, and event-date return alignment. GitHub Actions tests Python 3.10 through 3.13 and runs pip-audit against the installed dependency set.
+The suite covers deterministic generators, explicit dry-run safety, RSS/Atom parsing (including UTF-16 hostile XML), URL validation, feed limits, DTD/entity rejection, failure isolation, safe rendering of untrusted headlines, cache policy, dependency security floors, publisher labels, contributor instructions, and event-date return alignment. GitHub Actions tests Python 3.11 through 3.13 and runs pip-audit against only the isolated project environment, excluding runner packages and the audit tool itself.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Original code is MIT licensed. NVIDIA names and marks, third-party feeds, market data, headlines, and linked articles remain subject to their owners' rights and terms.
 
