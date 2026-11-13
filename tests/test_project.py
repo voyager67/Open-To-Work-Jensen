@@ -220,6 +220,14 @@ class StaticDemoTests(unittest.TestCase):
         self.assertIn("--skip-editable", workflow)
         self.assertNotIn("\n          pip-audit\n", workflow)
 
+    def test_pages_workflow_publishes_only_the_demo_directory(self):
+        root = Path(__file__).resolve().parents[1]
+        workflows = root / ".github" / "workflows"
+        self.assertFalse((workflows / "static.yml").exists())
+        pages = (workflows / "pages.yml").read_text(encoding="utf-8")
+        self.assertIn("path: docs", pages)
+        self.assertNotIn("path: '.'", pages)
+
     def test_streamlit_cache_cannot_be_manually_bypassed(self):
         app = (Path(__file__).resolve().parents[1] / "app.py").read_text(encoding="utf-8")
         self.assertNotIn("cached_news.clear", app)
