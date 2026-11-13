@@ -19,14 +19,14 @@ TOPICS = {
 }
 
 
-def classify_source(url: str, feed_kind: str = "aggregated") -> str:
-    """Classify by the linked publisher host, not by a headline's wording."""
+def classify_source(url: str) -> str:
+    """Classify the destination host, not the feed that discovered a link."""
     host = (urlparse(url).hostname or "").lower().removeprefix("www.")
-    if host in OFFICIAL_HOSTS:
+    if host == "nvidia.com" or host.endswith(".nvidia.com"):
         return "Company source"
     if host == "sec.gov" or host.endswith(".sec.gov"):
         return "Regulatory filing"
-    if feed_kind == "aggregated" or host == "news.google.com":
+    if host == "news.google.com" or host.endswith(".news.google.com"):
         return "Media / aggregator"
     return "External publisher"
 

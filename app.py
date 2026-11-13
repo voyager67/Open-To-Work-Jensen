@@ -176,7 +176,7 @@ with tabs[0]:
         shown = 0
         for article in articles:
             tags = topic_tags(article.title, article.summary)
-            source_label = classify_source(article.url, article.feed_kind)
+            source_label = classify_source(article.url)
             if topic_filter and not any(tag in topic_filter for tag in tags):
                 continue
             if source_filter and source_label not in source_filter:

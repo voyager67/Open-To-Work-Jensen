@@ -130,11 +130,13 @@ class FeedTests(unittest.TestCase):
 
 
 class SignalTests(unittest.TestCase):
-    def test_source_labels_follow_publisher_host(self):
-        self.assertEqual(classify_source("https://nvidianews.nvidia.com/news/example", "official"), "Company source")
-        self.assertEqual(classify_source("https://www.sec.gov/Archives/example", "regulatory"), "Regulatory filing")
+    def test_source_labels_follow_publisher_host_not_discovery_feed(self):
+        self.assertEqual(classify_source("https://nvidianews.nvidia.com/news/example"), "Company source")
+        self.assertEqual(classify_source("https://developer.nvidia.com/cuda"), "Company source")
+        self.assertEqual(classify_source("https://www.sec.gov/Archives/example"), "Regulatory filing")
         self.assertEqual(classify_source("https://news.google.com/rss/example"), "Media / aggregator")
-        self.assertEqual(classify_source("https://example.com/story", "official"), "External publisher")
+        self.assertEqual(classify_source("https://example.com/story"), "External publisher")
+        self.assertEqual(classify_source("https://nvidia.com.evil.example/story"), "External publisher")
 
     def test_topic_tags(self):
         self.assertIn("Leadership", topic_tags("NVIDIA appoints interim CEO"))
