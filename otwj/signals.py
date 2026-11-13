@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from urllib.parse import urlparse
 
-
-OFFICIAL_HOSTS = {"nvidianews.nvidia.com", "investor.nvidia.com"}
 TOPICS = {
     "Leadership": (
         "ceo", "chief executive", "succession", "successor", "interim", "board",
