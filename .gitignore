@@ -6,7 +6,10 @@ venv/
 .env.*
 !.env.example
 .streamlit/secrets.toml
-.streamlit/
+.streamlit/*
+!.streamlit/
+.streamlit/*
+!.streamlit/config.toml
 .DS_Store
 .pytest_cache/
 .coverage

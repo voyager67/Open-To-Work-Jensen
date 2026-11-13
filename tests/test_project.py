@@ -189,6 +189,11 @@ class StaticDemoTests(unittest.TestCase):
         self.assertIn('st.text(f"{article.publisher}', app)
         self.assertNotIn('st.markdown(f"**{article.title}**")', app)
 
+    def test_streamlit_usage_telemetry_is_disabled(self):
+        config = (Path(__file__).resolve().parents[1] / ".streamlit" / "config.toml").read_text(encoding="utf-8")
+        self.assertIn("[browser]", config)
+        self.assertRegex(config, r"gatherUsageStats\s*=\s*false")
+
 
 if __name__ == "__main__":
     unittest.main()

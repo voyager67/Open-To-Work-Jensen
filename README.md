@@ -110,7 +110,7 @@ Open the docs/index.html file directly, or enable GitHub Pages with **GitHub Act
 | Market context | Yahoo Finance via [yfinance](https://github.com/ranaroussi/yfinance) | Adjusted daily closes for NVDA and SPY; unofficial and potentially delayed. |
 | Dated context anchors | data/context_events.json | Manually reviewed dated company statements with primary links. |
 
-**Collection guardrails:** each feed request has a seven-second timeout and 1 MB response cap; requests are spaced at least 1.25 seconds apart; feed results are cached for 15 minutes and market data for one hour in Streamlit. Only headline metadata, publisher, timestamps, short summaries, and source links are shown. Article pages are not scraped or republished. Feed failures are isolated.
+**Collection guardrails:** Streamlit usage-statistics telemetry is disabled in the project config. Each feed request has a seven-second timeout and 1 MB response cap; requests are spaced at least 1.25 seconds apart; feed results are cached for 15 minutes and market data for one hour in Streamlit. Only headline metadata, publisher, timestamps, short summaries, and source links are shown. Article pages are not scraped or republished. Feed failures are isolated.
 
 Respect each source's terms. NVIDIA's [RSS directory](https://www.nvidia.com/en-us/about-nvidia/rss/) describes informational use and restricts commercial reuse; review the terms before reusing feeds elsewhere.
 
@@ -136,6 +136,7 @@ The CLI and browser demo use deterministic templates. The Streamlit dashboard ad
     ├── .github/                 # CI, Pages deployment, Dependabot, issue templates
     ├── data/context_events.json # Reviewed dated source anchors
     ├── docs/                    # Browser demo and SVG artwork
+    ├── .streamlit/config.toml   # Disables Streamlit usage telemetry
     ├── otwj/                    # CLI, feed reader, signals, generators, market adapter
     ├── tests/                   # Deterministic unit tests
     ├── app.py                   # Streamlit research dashboard

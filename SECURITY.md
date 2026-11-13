@@ -11,6 +11,7 @@ Please do not open a public issue containing credentials, personal data, or an e
 ## Design safeguards
 
 - No login, credential collection, or secrets are required.
+- Streamlit usage-statistics telemetry is disabled by the checked-in project config.
 - The CLI requires an explicit `--dry-run` flag.
 - The CLI performs no network or external actions.
 - Feed responses are time- and size-bounded.
